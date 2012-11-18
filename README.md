@@ -10,6 +10,7 @@ Of course you want to use this thing. So let's get started!
 ##build_form($array)
 You're going to want to create a super-duper array like this and then pass it to the `build_form` function.
 ```php
+<?
 $fields = array(
   array(
     'type' => 'label',
@@ -48,6 +49,7 @@ $fields = array(
     )
   )
 );
+?>
 
 <?= form_open($this->uri->uri_string()) ?>
   <?= build_form($fields) ?>
