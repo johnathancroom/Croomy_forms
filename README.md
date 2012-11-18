@@ -75,4 +75,18 @@ The output is as follows:
 Needs documentation.
 
 ##Building your Form Builder array
-Needs documentation
+Details on building every form element you can possibly imagine (pull request the missing ones, yo).
+###Input (text)
+Text inputs use the following array keys: `type`, `attributes`, `prefix`, `suffix`. The `attributes` key should contain an array and that array will be used to determine the HTML attributes of your `<input type="text">` element. The `prefix` and `suffix` keys are used to surround an element with extra HTML and should be strings.
+```php
+array(
+  'type' => 'input',
+  'attributes' => array(
+    'name' => 'email',
+    'value' => 'existing@user.com',
+    'placeholder' => 'Your Email'
+  ),
+  'prefix' => '<div>',
+  'suffix' => '</div>'
+)
+```
