@@ -1,5 +1,5 @@
-#Form Builder
-Form builder is a super duper set of functions that make building forms in CodeIgniter way more fun.
+#Croomy_forms
+Croomy_forms is a super duper set of functions that make building forms in CodeIgniter way more fun.
 
 #Installation
 Don't be unintelligent and just put the files where they belong.
@@ -76,8 +76,11 @@ Needs documentation.
 
 ##Building your Form Builder array
 Details on building every form element you can possibly imagine (pull request the missing ones, yo).
+
+###General (applies to all elements)
+All elements behave in generally the same way. The `attribute` key in the element’s array is used for the HTML attributes, the `prefix` and `suffix` keys are used to add surround HTML to the specific element, and the `type` key determines the type of form element.
+
 ###Input (text)
-Text inputs use the following array keys: `type`, `attributes`, `prefix`, `suffix`. The `attributes` key should contain an array and that array will be used to determine the HTML attributes of your `<input type="text">` element. The `prefix` and `suffix` keys are used to surround an element with extra HTML and should be strings.
 ```php
 array(
   'type' => 'input',
@@ -88,5 +91,25 @@ array(
   ),
   'prefix' => '<div>',
   'suffix' => '</div>'
-)
+);
+```
+
+###Select (dropdown)
+Selects use an extra key: `options`. This should be an array where the keys are your `<option>`’s values, and the array’s values are your `<option>`’s displayed text. The `value` key in the `attributes` array is used to select an option. In this example, William would be selected by default.
+```php
+array(
+  'type' => 'dropdown',
+  'attributes' => array(
+    'name' => 'employee',
+    'value' => '2',
+    'class' => 'employee_select'
+  ),
+  'options' => array(
+    0 => 'John',
+    1 => 'Fred',
+    2 => 'William'
+  ),
+  'prefix' => '<div>',
+  'suffix' => '</div>'
+);
 ```
