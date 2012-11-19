@@ -52,6 +52,12 @@ function build_form($array) {
       echo $field['prefix'];
     }
 
+    # ID auto-set as name
+    if(in_array($field['type'], array('input', 'hidden', 'radio', 'checkbox', 'textarea', 'submit')) && isset($field['attributes']['name']))
+    {
+      if(!isset($field['attributes']['id'])) $field['attributes']['id'] = $field['attributes']['name'];
+    }
+
     if($field['type'] == 'label')
     {
       # Defaults
@@ -70,11 +76,16 @@ function build_form($array) {
     {
       echo form_hidden($field['attributes']);
     }
+    elseif($field['type'] == 'radio')
+    {
+      echo form_radio($field['attributes']);
+    }
+    elseif($field['type'] == 'checkbox')
+    {
+      echo form_checkbox($field['attributes']);
+    }
     elseif($field['type'] == 'textarea')
     {
-      # Defaults
-      if(!isset($field['attributes']['id'])) $field['attributes']['id'] = $field['attributes']['name'];
-
       echo form_textarea($field['attributes']);
     }
     elseif($field['type'] == 'dropdown')
