@@ -111,6 +111,9 @@ function build_form($array) {
     {
       echo $field['suffix'];
     }
+
+    # Create a new line to make source HTML less horrific
+    echo "\n";
   }
 }
 
