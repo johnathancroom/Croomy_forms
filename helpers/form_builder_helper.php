@@ -31,13 +31,37 @@ function year_select_options($start = NULL, $end = NULL) {
 }
 
 function day_select_options() {
-  $days = array();
-  for($i = 1; $i <= 31; $i++)
+  return _generic_select_options(31);
+}
+
+function hour_select_options() {
+  return _generic_select_options(12);
+}
+
+function minute_select_options() {
+  return _generic_select_options(59, 0);
+}
+
+function second_select_options() {
+  return _generic_select_options(59, 0);
+}
+
+function period_select_options() {
+  return array(
+    1 => 'AM',
+    2 => 'PM'
+  );
+}
+
+function _generic_select_options($max, $start = 1) {
+  $numbers = array();
+
+  for($i = $start; $i <= $max; $i++)
   {
-    $days[$i] = (strlen($i) == 1) ? '0'.$i : $i;
+    $numbers[$i] = (strlen($i) == 1) ? '0'.$i : $i;
   }
 
-  return $days;
+  return $numbers;
 }
 
 function build_form($array) {
@@ -53,7 +77,7 @@ function build_form($array) {
     }
 
     # ID auto-set as name
-    if(in_array($field['type'], array('input', 'hidden', 'radio', 'checkbox', 'textarea', 'submit')) && isset($field['attributes']['name']))
+    if(in_array($field['type'], array('input', 'hidden', 'radio', 'checkbox', 'textarea', 'dropdown', 'submit')) && isset($field['attributes']['name']))
     {
       if(!isset($field['attributes']['id'])) $field['attributes']['id'] = $field['attributes']['name'];
     }
@@ -64,7 +88,7 @@ function build_form($array) {
       if(!isset($field['attributes']['for'])) $field['attributes']['for'] = NULL;
       if(!isset($field['attributes']['value'])) $field['attributes']['value'] = NULL;
 
-      $options = build_form_remove_defaults($field['attributes'], array('for', 'value'));
+      $options = _build_form_remove_defaults($field['attributes'], array('for', 'value'));
 
       echo form_label($field['attributes']['value'], $field['attributes']['for'], $options);
     }
@@ -95,7 +119,7 @@ function build_form($array) {
       if(!isset($field['options'])) $field['options'] = array();
       if(!isset($field['attributes']['value'])) $field['attributes']['value'] = NULL;
 
-      $options = build_form_remove_defaults($field['attributes'], array('name', 'value'));
+      $options = _build_form_remove_defaults($field['attributes'], array('name', 'value'));
 
       $options_html = convert_attributes_array_to_html($options);
 
@@ -111,13 +135,10 @@ function build_form($array) {
     {
       echo $field['suffix'];
     }
-
-    # Create a new line to make source HTML less horrific
-    echo "\n";
   }
 }
 
-function build_form_remove_defaults($options, $defaults) {
+function _build_form_remove_defaults($options, $defaults) {
   foreach($options as $key => $option)
   {
     if(in_array($key, $defaults))
